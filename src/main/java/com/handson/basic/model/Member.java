@@ -28,7 +28,7 @@ public class Member implements Serializable {
     @Column(nullable = false, updatable = false)
     private Date createdAt = Dates.nowUTC();
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonProperty("createdAt")
     public LocalDateTime calcCreatedAt() {
         return Dates.atLocalTime(createdAt);
@@ -46,19 +46,21 @@ public class Member implements Serializable {
         return Dates.atLocalTime(birthDate);
     }
 
-//    @Min(100)
-//    @Max(800)
-//    private Integer satScore;
-//
-//    @Min(30)
-//    @Max(110)
-//    private Double graduationScore;
-//
-//    @Length(max = 20)
-//    private String phone;
+    @NotEmpty
+//    @Unique
+    @Length(max = 20)
+    private String username;
+
+    @Length(max = 40)
+    private String email;
+
+    @Length(max = 20)
+    private String password;
 
     @Length(max = 500)
     private String profilePicture;
+
+    private String role;
 
 //    public Collection<StudentGrade> getStudentGrades() {
 //        return studentGrades;
@@ -67,14 +69,14 @@ public class Member implements Serializable {
 //    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private Collection<StudentGrade> studentGrades = new ArrayList<>();
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
 
     public Long getId() {
         return id;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
@@ -82,7 +84,6 @@ public class Member implements Serializable {
     public String getFullname() {
         return fullname;
     }
-
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
@@ -90,41 +91,43 @@ public class Member implements Serializable {
     public Date getBirthDate() {
         return birthDate;
     }
-
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
-//    public Integer getSatScore() {
-//        return satScore;
-//    }
-//
-//    public void setSatScore(Integer satScore) {
-//        this.satScore = satScore;
-//    }
-//
-//    public Double getGraduationScore() {
-//        return graduationScore;
-//    }
-//
-//    public void setGraduationScore(Double graduationScore) {
-//        this.graduationScore = graduationScore;
-//    }
-//
-//    public String getPhone() {
-//        return phone;
-//    }
-//
-//    public void setPhone(String phone) {
-//        this.phone = phone;
-//    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getProfilePicture() {
         return profilePicture;
     }
-
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public static final class MemberBuilder {
@@ -132,11 +135,11 @@ public class Member implements Serializable {
         private Date createdAt = Dates.nowUTC();
         private String fullname;
         private Date birthDate;
-//        private Integer satScore;
-//        private Double graduationScore;
-//        private String phone;
+        private String username;
+        private String email;
+        private String password;
         private String profilePicture;
-
+        private String role;
         private MemberBuilder() {
         }
 
@@ -164,23 +167,28 @@ public class Member implements Serializable {
             return this;
         }
 
-//        public StudentBuilder satScore(Integer satScore) {
-//            this.satScore = satScore;
-//            return this;
-//        }
-//
-//        public StudentBuilder graduationScore(Double graduationScore) {
-//            this.graduationScore = graduationScore;
-//            return this;
-//        }
-//
-//        public StudentBuilder phone(String phone) {
-//            this.phone = phone;
-//            return this;
-//        }
+        public MemberBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public MemberBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public MemberBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
 
         public MemberBuilder profilePicture(String profilePicture) {
             this.profilePicture = profilePicture;
+            return this;
+        }
+
+        public MemberBuilder role(String role) {
+            this.role = role;
             return this;
         }
 
@@ -189,10 +197,11 @@ public class Member implements Serializable {
             member.setCreatedAt(createdAt);
             member.setFullname(fullname);
             member.setBirthDate(birthDate);
-//            student.setSatScore(satScore);
-//            student.setGraduationScore(graduationScore);
-//            student.setPhone(phone);
+            member.setUsername(username);
+            member.setEmail(email);
+            member.setPassword(password);
             member.setProfilePicture(profilePicture);
+            member.setRole(role);
             member.id = this.id;
             return member;
         }

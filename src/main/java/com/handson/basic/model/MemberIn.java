@@ -17,37 +17,39 @@ public class MemberIn implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
 
-//    @Min(100)
-//    @Max(800)
-//    private Integer satScore;
-//
-//    @Min(30)
-//    @Max(110)
-//    private Double graduationScore;
-//
-//    @Length(max = 20)
-//    private String phone;
+    @Length(max = 20)
+    private String username;
 
+    @Length(max = 40)
+    private String email;
+
+    @Length(max = 20)
+    private String password;
+
+    private String role;
 
     public Member toMember() {
-        return aMember().birthDate(Dates.atUtc(birthDate)).fullname(fullname)
-//                .satScore(satScore).graduationScore(graduationScore)
-//                .phone(phone)
+        return aMember().fullname(fullname)
+                .birthDate(Dates.atUtc(birthDate))
+                .username(username)
+                .email(email)
+                .password(password)
+                .role(role)
                 .build();
     }
 
     public void updateMember(Member member) {
-        member.setBirthDate(Dates.atUtc(birthDate));
         member.setFullname(fullname);
-//        student.setSatScore(satScore);
-//        student.setGraduationScore(graduationScore);
-//        student.setPhone(phone);
+        member.setBirthDate(Dates.atUtc(birthDate));
+        member.setUsername(username);
+        member.setEmail(email);
+        member.setPassword(password);
+        member.setRole(role);
     }
 
     public String getFullname() {
         return fullname;
     }
-
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
@@ -55,32 +57,35 @@ public class MemberIn implements Serializable {
     public LocalDate getBirthDate() {
         return birthDate;
     }
-
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
-//    public Integer getSatScore() {
-//        return satScore;
-//    }
-//
-//    public void setSatScore(Integer satScore) {
-//        this.satScore = satScore;
-//    }
-//
-//    public Double getGraduationScore() {
-//        return graduationScore;
-//    }
-//
-//    public void setGraduationScore(Double graduationScore) {
-//        this.graduationScore = graduationScore;
-//    }
-//
-//    public String getPhone() {
-//        return phone;
-//    }
-//
-//    public void setPhone(String phone) {
-//        this.phone = phone;
-//    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

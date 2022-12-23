@@ -22,7 +22,7 @@ public class MemberOut {
 
     private Date createdat;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonProperty("createdat")
     public LocalDateTime calcCreatedAt() {
         return Dates.atLocalTime(createdat);
@@ -37,10 +37,8 @@ public class MemberOut {
         return Dates.atLocalTime(birthdate);
     }
 
-//    private Integer satscore;
-//    private Double graduationscore;
+//    private String username;
 
-//    private String phone;
     private String profilepicture;
 //    private Double avgscore;
 
@@ -50,21 +48,11 @@ public class MemberOut {
         res.createdat = member.getCreatedAt();
         res.fullname = member.getFullname();
         res.birthdate = member.getBirthDate();
-//        res.satscore = student.getSatScore();
-//        res.graduationscore = student.getGraduationScore();
-//        res.phone = student.getPhone();
+//        res.username = member.getUsername();
         res.profilepicture = awsService.generateLink(member.getProfilePicture());
 //        res.avgscore = null;
         return res;
     }
-
-//    public Integer getSatscore() {
-//        return satscore;
-//    }
-//
-//    public Double getGraduationscore() {
-//        return graduationscore;
-//    }
 
     public String getProfilepicture() {
         return profilepicture;
@@ -72,15 +60,6 @@ public class MemberOut {
 
 //    public Double getAvgscore() {
 //        return avgscore;
-//    }
-//
-//    public Integer getSatScore() {
-//        return satscore;
-//    }
-//
-//    public Double getGraduationScore() {
-//        return graduationscore;
-//    }
 
     public Date getCreatedat() {
         return createdat;
@@ -94,7 +73,6 @@ public class MemberOut {
         return birthdate;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -103,8 +81,8 @@ public class MemberOut {
         this.id = id;
     }
 
-//    public String getPhone() {
-//        return phone;
+//    public String getUsername() {
+//        return username;
 //    }
 
     public String getProfilePicture() {

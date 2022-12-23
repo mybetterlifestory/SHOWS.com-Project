@@ -48,17 +48,21 @@ public class Show implements Serializable {
     @JsonProperty("ended")
     public LocalDateTime calcEnded() { return Dates.atLocalTime(ended); }
 
+    @Length(max = 2000)
+    private String summery;
+    private String genres;
+    private String status;
+    private Integer rating;
     @Length(max = 500)
     private String image;
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
 
     public Long getId() {
         return id;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
@@ -66,27 +70,51 @@ public class Show implements Serializable {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Date getPremieredDate() {
+    public Date getPremiered() {
         return premiered;
     }
-
-    public void setPremieredDate(Date premiered) {
+    public void setPremiered(Date premiered) {
         this.premiered = premiered;
     }
 
-    public Date getEndedDate() {
+    public Date getEnded() {
         return ended;
     }
-
-    public void setEndedDate(Date ended) {
+    public void setEnded(Date ended) {
         this.ended = ended;
     }
 
+    public String getSummery() {
+        return summery;
+    }
+    public void setSummery(String summery) {
+        this.summery = summery;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
     public String getImage() {
         return image;
     }
@@ -100,11 +128,13 @@ public class Show implements Serializable {
         private String name;
         private Date premiered;
         private Date ended;
+        private String summery;
+        private String genres;
+        private String status;
+        private Integer rating;
         private String image;
 
-        private ShowBuilder() {
-        }
-
+        private ShowBuilder() {}
         public static ShowBuilder aShow() {
             return new ShowBuilder();
         }
@@ -113,27 +143,38 @@ public class Show implements Serializable {
             this.id = id;
             return this;
         }
-
         public Show.ShowBuilder createdAt(Date createdAt) {
             this.createdAt = createdAt;
             return this;
         }
-
         public ShowBuilder name(String name) {
             this.name = name;
             return this;
         }
-
         public ShowBuilder premiered(Date premiered) {
             this.premiered = premiered;
             return this;
         }
-
         public ShowBuilder ended(Date ended) {
             this.ended = ended;
             return this;
         }
-
+        public ShowBuilder summery(String summery) {
+            this.summery = summery;
+            return this;
+        }
+        public ShowBuilder genres(String genres) {
+            this.genres = genres;
+            return this;
+        }
+        public ShowBuilder status(String status) {
+            this.status = status;
+            return this;
+        }
+        public ShowBuilder rating(Integer rating) {
+            this.rating = rating;
+            return this;
+        }
         public ShowBuilder image(String image) {
             this.image = image;
             return this;
@@ -143,8 +184,12 @@ public class Show implements Serializable {
             Show show = new Show();
             show.setCreatedAt(createdAt);
             show.setName(name);
-            show.setPremieredDate(premiered);
-            show.setEndedDate(ended);
+            show.setPremiered(premiered);
+            show.setEnded(ended);
+            show.setSummery(summery);
+            show.setGenres(genres);
+            show.setStatus(status);
+            show.setRating(rating);
             show.setImage(image);
             show.id = this.id;
             return show;

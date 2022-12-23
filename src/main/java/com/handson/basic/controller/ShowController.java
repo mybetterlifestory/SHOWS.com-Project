@@ -73,7 +73,7 @@ public class ShowController {
                         aFPSCondition().condition("( s.birth_Date >= :fromBirthDate )").parameterName("fromBirthDate").value(atUtc(fromBirthDate)).build(),
                         aFPSCondition().condition("( s.birth_Date <= :toBirthDate )").parameterName("toBirthDate").value(atUtc(toBirthDate)).build()
                 )).sortField(sort.fieldName).sortDirection(sortDirection).page(page).count(count)
-                .itemClass(MemberOut.class)
+                .itemClass(ShowOut.class)
                 .build().exec(em, om);
         return ResponseEntity.ok(res);
     }
@@ -110,5 +110,4 @@ public class ShowController {
         showService.delete(dbShow.get());
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
-
 }
