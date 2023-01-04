@@ -52,7 +52,7 @@ public class ShowController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<PaginationAndList> search(@RequestParam(required = false) String fullName,
+    public ResponseEntity<?> search(@RequestParam(required = false) String fullName,
                                                     @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromBirthDate,
                                                     @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toBirthDate,
                                                     @RequestParam(defaultValue = "1") Integer page,
@@ -75,8 +75,11 @@ public class ShowController {
                 )).sortField(sort.fieldName).sortDirection(sortDirection).page(page).count(count)
                 .itemClass(ShowOut.class)
                 .build().exec(em, om);
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(res.getData());
     }
+
+//    @RequestMapping(value = "", method = RequestMethod.GET)
+//    public ResponseEntity<?> all()
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOneShow(@PathVariable Long id)
