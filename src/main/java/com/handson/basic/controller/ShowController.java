@@ -44,7 +44,8 @@ public class ShowController {
     {
         Optional<Show> dbShow = showService.findById(id);
         if (dbShow.isEmpty()) throw new HandsonException("Show with id: " + id + " not found");
-        String bucketPath = "apps/victoria/show-" +  id + ".png" ;
+//        String bucketPath = "apps/victoria/show-" +  id + ".png" ;
+        String bucketPath = "/show-" +  id + ".png" ;
         awsService.putInBucket(image, bucketPath);
         dbShow.get().setImage(bucketPath);
         Show updatedShow = showService.save(dbShow.get());

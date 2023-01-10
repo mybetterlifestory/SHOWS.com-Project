@@ -58,13 +58,10 @@ public class ShowOut {
 //        res.summery = show.getSummery();
 //        res.genres = show.getGenres();
 //        res.status = show.getStatus();
-        res.image = awsService.generateLink(show.getImage());
+        res.image =  awsService.generateLink(show.getImage());
+
         return res;
     }
-
-//    public String getImage() {
-//        return image;
-//    }
 
     public Date getCreatedat() {
         return createdat;
