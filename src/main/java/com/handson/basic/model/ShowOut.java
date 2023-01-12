@@ -31,10 +31,9 @@ public class ShowOut {
     private String name;
     private Date premiered;
     private Date ended;
-    private String summery;
-    private String genres;
-    private String status;
-    private Integer rating;
+//    private String summery;
+//    private String genres;
+//    private String status;
     private String image;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -49,23 +48,19 @@ public class ShowOut {
         return Dates.atLocalTime(ended);
     }
 
-    public static ShowOut of(Show show) {
+    public static ShowOut of(Show show, AWSService awsService) {
         ShowOut res = new ShowOut();
         res.id = show.getId();
         res.createdat = show.getCreatedAt();
         res.name = show.getName();
         res.premiered = show.getPremiered();
         res.ended = show.getEnded();
-        res.summery = show.getSummery();
-        res.genres = show.getGenres();
-        res.status = show.getStatus();
-        res.rating = show.getRating();
-        res.image =  show.getImage();
-        res.adjustAwsUrl();
+//        res.summery = show.getSummery();
+//        res.genres = show.getGenres();
+//        res.status = show.getStatus();
+        res.image =  awsService.generateLink(show.getImage());
+
         return res;
-    }
-    public void adjustAwsUrl() {
-        this.image = "https://s3.amazonaws.com/shows.com" + this.image;
     }
 
     public Date getCreatedat() {
@@ -76,10 +71,15 @@ public class ShowOut {
     }
     public Date getPremiered() { return premiered; }
     public Date getEnded() { return ended; }
-    public String getSummery() { return summery; }
-    public String getGenres() { return genres; }
-    public String getStatus() { return status; }
-    public Integer getRating() { return rating; }
+//    public String getSummery() {
+//        return summery;
+//    }
+//    public String getGenres() {
+//        return genres;
+//    }
+//    public String getStatus() {
+//        return status;
+//    }
 
     public Long getId() {
         return id;
