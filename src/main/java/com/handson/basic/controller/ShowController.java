@@ -66,6 +66,10 @@ public class ShowController {
                         aFPSField().field("s.name").alias("name").build(),
                         aFPSField().field("s.premiered").alias("premiered").build(),
                         aFPSField().field("s.ended").alias("ended").build(),
+                        aFPSField().field("s.summery").alias("summery").build(),
+                        aFPSField().field("s.genres").alias("genres").build(),
+                        aFPSField().field("s.status").alias("status").build(),
+                        aFPSField().field("s.rating").alias("rating").build(),
                         aFPSField().field("s.image").alias("image").build()
                 ))
                 .from(List.of(" show s"))

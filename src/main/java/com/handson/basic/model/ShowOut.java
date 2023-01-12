@@ -31,9 +31,10 @@ public class ShowOut {
     private String name;
     private Date premiered;
     private Date ended;
-//    private String summery;
-//    private String genres;
-//    private String status;
+    private String summery;
+    private String genres;
+    private String status;
+    private Integer rating;
     private String image;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -55,31 +56,23 @@ public class ShowOut {
         res.name = show.getName();
         res.premiered = show.getPremiered();
         res.ended = show.getEnded();
-//        res.summery = show.getSummery();
-//        res.genres = show.getGenres();
-//        res.status = show.getStatus();
+        res.summery = show.getSummery();
+        res.genres = show.getGenres();
+        res.status = show.getStatus();
+        res.rating = show.getRating();
         res.image =  awsService.generateLink(show.getImage());
 
         return res;
     }
 
-    public Date getCreatedat() {
-        return createdat;
-    }
-    public String getName() {
-        return name;
-    }
+    public Date getCreatedat() { return createdat; }
+    public String getName() { return name; }
     public Date getPremiered() { return premiered; }
     public Date getEnded() { return ended; }
-//    public String getSummery() {
-//        return summery;
-//    }
-//    public String getGenres() {
-//        return genres;
-//    }
-//    public String getStatus() {
-//        return status;
-//    }
+    public String getSummery() { return summery; }
+    public String getGenres() { return genres; }
+    public String getStatus() { return status; }
+    public Integer getRating() { return rating; }
 
     public Long getId() {
         return id;
