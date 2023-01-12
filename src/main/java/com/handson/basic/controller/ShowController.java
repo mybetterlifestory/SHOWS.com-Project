@@ -49,7 +49,7 @@ public class ShowController {
         awsService.putInBucket(image, bucketPath);
         dbShow.get().setImage(bucketPath);
         Show updatedShow = showService.save(dbShow.get());
-        return new ResponseEntity<>(ShowOut.of(updatedShow, awsService) , HttpStatus.OK);
+        return new ResponseEntity<>(ShowOut.of(updatedShow) , HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -66,6 +66,10 @@ public class ShowController {
                         aFPSField().field("s.name").alias("name").build(),
                         aFPSField().field("s.premiered").alias("premiered").build(),
                         aFPSField().field("s.ended").alias("ended").build(),
+                        aFPSField().field("s.summery").alias("summery").build(),
+                        aFPSField().field("s.genres").alias("genres").build(),
+                        aFPSField().field("s.status").alias("status").build(),
+                        aFPSField().field("s.rating").alias("rating").build(),
                         aFPSField().field("s.image").alias("image").build()
                 ))
                 .from(List.of(" show s"))
@@ -76,8 +80,10 @@ public class ShowController {
                 )).sortField(sort.fieldName).sortDirection(sortDirection).page(page).count(count)
                 .itemClass(ShowOut.class)
                 .build().exec(em, om);
+        res.getData().forEach(show -> ((ShowOut)show).adjustAwsUrl());
         return ResponseEntity.ok(res.getData());
     }
+
 
 //    @RequestMapping(value = "", method = RequestMethod.GET)
 //    public ResponseEntity<?> all()
@@ -85,7 +91,9 @@ public class ShowController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOneShow(@PathVariable Long id)
     {
-        return new ResponseEntity<>(showService.findById(id), HttpStatus.OK);
+        Show s = showService.findById(id).get();
+        ShowOut showOut = ShowOut.of(s);
+        return new ResponseEntity<>(showOut, HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
