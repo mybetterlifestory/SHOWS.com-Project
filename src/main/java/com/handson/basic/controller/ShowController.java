@@ -80,6 +80,7 @@ public class ShowController {
                 )).sortField(sort.fieldName).sortDirection(sortDirection).page(page).count(count)
                 .itemClass(ShowOut.class)
                 .build().exec(em, om);
+        res.getData().forEach(show-> ((ShowOut) show).adjustImageUrl());
         return ResponseEntity.ok(res.getData());
     }
 
@@ -89,7 +90,7 @@ public class ShowController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOneShow(@PathVariable Long id)
     {
-        return new ResponseEntity<>(showService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(ShowOut.of(showService.findById(id).get(), awsService), HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)

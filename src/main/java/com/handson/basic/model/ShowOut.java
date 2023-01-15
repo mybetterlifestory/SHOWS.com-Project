@@ -60,9 +60,15 @@ public class ShowOut {
         res.genres = show.getGenres();
         res.status = show.getStatus();
         res.rating = show.getRating();
-        res.image =  awsService.generateLink(show.getImage());
-
+        res.image =   show.getImage();
+        res.adjustImageUrl();
         return res;
+    }
+
+    public void adjustImageUrl() {
+        if (this.image != null && !(this.image.startsWith("http"))){
+            this.image = "https://s3.amazonaws.com/shows.com" + this.image;
+        }
     }
 
     public Date getCreatedat() { return createdat; }

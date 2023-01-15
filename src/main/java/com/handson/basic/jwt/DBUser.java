@@ -61,18 +61,18 @@ public class DBUser implements Serializable, Persistable<Long> {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setPassword(String password) {
         this.password = password; //DBUser.hashPassword(unencryptedPassword);
     }
-
     public String getPassword() {
         return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
 
     public static final class UserBuilder {
