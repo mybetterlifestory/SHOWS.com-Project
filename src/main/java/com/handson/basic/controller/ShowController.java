@@ -95,7 +95,6 @@ public class ShowController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> insertShow(@RequestBody ShowIn showIn)
-
     {
         Show show = ShowIn.toShow();
         show = showService.save(show);

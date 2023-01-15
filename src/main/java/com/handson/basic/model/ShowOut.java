@@ -86,7 +86,6 @@ public class ShowOut {
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getImage() {
         return image;
     }
