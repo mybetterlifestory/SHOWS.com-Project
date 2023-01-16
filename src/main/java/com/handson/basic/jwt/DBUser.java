@@ -22,7 +22,6 @@ public class DBUser implements Serializable, Persistable<Long> {
     public Long getId() {
         return id;
     }
-
     protected void setId(final Long id) {
         this.id = id;
     }
@@ -33,12 +32,21 @@ public class DBUser implements Serializable, Persistable<Long> {
         return null == getId();
     }
 
+    @Column(nullable = false, length = 33)
+    private String fullName;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 100)
+    private String email;
+
+    @Column(nullable = false, length = 33)
+    private String permission;
+
+    @Column(nullable = false, length = 33)
     private String name;
 
+    private String role;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 33)
     private String password;
 
     protected DBUser() {
@@ -54,8 +62,33 @@ public class DBUser implements Serializable, Persistable<Long> {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", getId())
+                .add("fullName", fullName)
                 .add("name", name)
+                .add("role", role)
                 .toString();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getName() {
@@ -63,6 +96,13 @@ public class DBUser implements Serializable, Persistable<Long> {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setPassword(String password) {
@@ -73,11 +113,16 @@ public class DBUser implements Serializable, Persistable<Long> {
     }
 
 
-
-
     public static final class UserBuilder {
         protected Long id;
+        private String fullName;
         private String name;
+        private String role;
+
+        private String email;
+
+        private String permission;
+
         private String password;//https://bcrypt-generator.com/ generate password user+email:javainuse,password:$2y$12$JfmXLQVmTZGpeYVgr6AVhejDGynQ739F4pJE1ZjyCPTvKIHTYb2fi
 
         private UserBuilder() {
@@ -87,8 +132,31 @@ public class DBUser implements Serializable, Persistable<Long> {
             return new UserBuilder();
         }
 
+        public UserBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder fullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+        public UserBuilder permission(String permission) {
+            this.permission = permission;
+            return this;
+        }
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
         public UserBuilder name(String name) {
             this.name = name;
+            return this;
+        }
+
+        public UserBuilder role(String role) {
+            this.role = role;
             return this;
         }
 
@@ -97,16 +165,15 @@ public class DBUser implements Serializable, Persistable<Long> {
             return this;
         }
 
-        public UserBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
         public DBUser build() {
             DBUser user = new DBUser();
-            user.setName(name);
-            user.setPassword(password);
             user.setId(id);
+            user.setFullName(fullName);
+            user.setName(name);
+            user.setRole(role);
+            user.setPassword(password);
+            user.setPermission(permission);
+            user.setEmail(email);
             return user;
         }
     }

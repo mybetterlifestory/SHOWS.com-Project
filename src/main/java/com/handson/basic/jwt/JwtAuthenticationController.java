@@ -1,11 +1,13 @@
 package com.handson.basic.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,14 +45,18 @@ public class JwtAuthenticationController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ResponseEntity<?> createUser(@RequestBody JwtRequest userRequest) throws Exception {
+    public ResponseEntity<?> createUser(@RequestBody CreateUserRequest userRequest) throws Exception {
         String encodedPass = passwordEncoder.encode(userRequest.getPassword());
         DBUser user = DBUser.UserBuilder.anUser().name(userRequest.getUsername())
-                .password(encodedPass).build();
+                .fullName(userRequest.getFullName())
+                .role(userRequest.getRole())
+                .password(encodedPass).permission(userRequest.getPermission())
+                .email(userRequest.getEmail()).build();
         userService.save(user);
         UserDetails userDetails = new User(userRequest.getUsername(), encodedPass, new ArrayList<>());
         return ResponseEntity.ok(new JwtResponse(jwtTokenUtil.generateToken(userDetails)));
     }
+
 
     private void authenticate(String username, String password) throws Exception {
         try {
@@ -61,4 +67,12 @@ public class JwtAuthenticationController {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
+
+    @RequestMapping(value = "/cur_user", method = RequestMethod.GET)
+    private ResponseEntity<?> getCurrentUserDetails(Authentication currentUser) throws Exception {
+        DBUser curUser = userService.findUserName(currentUser.getName()).get();
+        return new ResponseEntity<>(curUser, HttpStatus.OK);
+
+    }
+
 }
